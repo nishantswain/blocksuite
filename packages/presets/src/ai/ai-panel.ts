@@ -159,7 +159,14 @@ export function buildErrorResponseConfig(panel: AffineAIPanelWidget) {
         {
           name: 'Replace selection',
           icon: ResetIcon,
-          showWhen: () => !!panel.answer,
+          showWhen: () => {
+            console.trace(
+              'replace selection showWhen: ',
+              !!panel.answer,
+              panel
+            );
+            return !!panel.answer;
+          },
           handler: () => {
             _replace().catch(console.error);
           },
@@ -167,7 +174,10 @@ export function buildErrorResponseConfig(panel: AffineAIPanelWidget) {
         {
           name: 'Insert below',
           icon: DiscardIcon,
-          showWhen: () => !!panel.answer,
+          showWhen: () => {
+            console.trace('Insert below showWhen: ', !!panel.answer, panel);
+            return !!panel.answer;
+          },
           handler: () => {
             _insertBelow().catch(console.error);
           },

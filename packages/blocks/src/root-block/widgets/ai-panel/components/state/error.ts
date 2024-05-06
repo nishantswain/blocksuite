@@ -172,6 +172,7 @@ export class AIPanelError extends WithDisposable(LitElement) {
   };
 
   override render() {
+    const responseGroup = this._getResponseGroup();
     const errorTemplate = choose(
       this.config.error?.type,
       [
@@ -233,10 +234,10 @@ export class AIPanelError extends WithDisposable(LitElement) {
       ${this.withAnswer
         ? html`<ai-finish-tip .copy=${this.copy}></ai-finish-tip>`
         : nothing}
-      ${this._getResponseGroup().length > 0
+      ${responseGroup.length > 0
         ? html`
             <ai-panel-divider></ai-panel-divider>
-            ${this.config.responses.map(
+            ${responseGroup.map(
               (group, index) => html`
                 ${index !== 0
                   ? html`<ai-panel-divider></ai-panel-divider>`
