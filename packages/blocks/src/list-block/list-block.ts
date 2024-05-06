@@ -11,6 +11,7 @@ import { customElement, query, state } from 'lit/decorators.js';
 import { bindContainerHotkey } from '../_common/components/rich-text/keymap/index.js';
 import type { RichText } from '../_common/components/rich-text/rich-text.js';
 import { BLOCK_CHILDREN_CONTAINER_PADDING_LEFT } from '../_common/consts.js';
+import { getViewportElement } from '../_common/utils/query.js';
 import type { NoteBlockComponent } from '../note-block/note-block.js';
 import { EdgelessRootBlockComponent } from '../root-block/edgeless/edgeless-root-block.js';
 import type { ListBlockModel } from './list-model.js';
@@ -187,6 +188,9 @@ export class ListBlockComponent extends BlockElement<
       ${this.renderChildren(this.model)}
     </div>`;
 
+    const scrollContainer = getViewportElement(this.host);
+    assertExists(scrollContainer);
+
     return html`
       <div class=${'affine-list-block-container'}>
         <style>
@@ -206,6 +210,7 @@ export class ListBlockComponent extends BlockElement<
             .inlineRangeProvider=${this._inlineRangeProvider}
             .enableClipboard=${false}
             .enableUndoRedo=${false}
+            .verticalScrollContainer=${scrollContainer}
           ></rich-text>
         </div>
 

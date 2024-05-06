@@ -25,6 +25,7 @@ import type { RichText } from '../_common/components/rich-text/rich-text.js';
 import { PAGE_HEADER_HEIGHT } from '../_common/consts.js';
 import { ArrowDownIcon } from '../_common/icons/index.js';
 import { listenToThemeChange } from '../_common/theme/utils.js';
+import { getViewportElement } from '../_common/utils/query.js';
 import type { NoteBlockComponent } from '../note-block/note-block.js';
 import { EdgelessRootBlockComponent } from '../root-block/edgeless/edgeless-root-block.js';
 import { CodeClipboardController } from './clipboard/index.js';
@@ -482,6 +483,9 @@ export class CodeBlockComponent extends BlockElement<CodeBlockModel> {
   }
 
   override renderBlock(): TemplateResult<1> {
+    const scrollContainer = getViewportElement(this.host);
+    assertExists(scrollContainer);
+
     return html`
       <div
         ${ref(this._whenHover.setReference)}
@@ -507,6 +511,7 @@ export class CodeBlockComponent extends BlockElement<CodeBlockModel> {
             .enableClipboard=${false}
             .enableUndoRedo=${false}
             .wrapText=${this._wrap}
+            .verticalScrollContainer=${scrollContainer}
           >
           </rich-text>
         </div>

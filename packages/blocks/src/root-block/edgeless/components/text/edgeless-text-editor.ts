@@ -377,7 +377,6 @@ export class EdgelessTextEditor extends WithDisposable(ShadowlessElement) {
         .yText=${text}
         .enableFormat=${false}
         .enableAutoScrollHorizontally=${false}
-        .enableAutoScrollVertically=${false}
         style=${isEmpty
           ? styleMap({
               position: 'absolute',

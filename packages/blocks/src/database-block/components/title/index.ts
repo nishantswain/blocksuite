@@ -7,6 +7,7 @@ import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import type { RichText } from '../../../_common/components/index.js';
+import { getViewportElement } from '../../../_common/utils/query.js';
 import type { DatabaseBlockComponent } from '../../database-block.js';
 
 @customElement('affine-database-title')
@@ -142,6 +143,13 @@ export class DatabaseTitle extends WithDisposable(ShadowlessElement) {
       'database-title': true,
       ellipsis: !this.isActive,
     });
+
+    assertExists(this.topContenteditableElement?.host);
+    const scrollContainer = getViewportElement(
+      this.topContenteditableElement.host
+    );
+    assertExists(scrollContainer);
+
     return html`<div class="affine-database-title">
       <rich-text
         .yText=${this.titleText.yText}
@@ -149,6 +157,7 @@ export class DatabaseTitle extends WithDisposable(ShadowlessElement) {
         .undoManager=${this.topContenteditableElement?.doc.history}
         .enableFormat=${false}
         .readonly=${this.readonly}
+        .verticalScrollContainer=${scrollContainer}
         class="${classList}"
         data-title-empty="${isEmpty}"
         data-title-focus="${this.isActive}"
